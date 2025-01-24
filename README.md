@@ -10,14 +10,14 @@
 -p corresponding to --in-parts
 
 # USAGE
-_Exemple 1:_
-./DividaEtImpera -db 1000000 small_image.png  ## separate the file in different file of each 1Mbytes long.
-./DividaEtImpera -i small_image.pngN.dei      ## here the N is any part of the sequence.
-
-_Exemple 2:_
-./DividaEtImpera -dp 5 big_file.tgz.rar      ## separate the file in 5 files.
-./DividaEtImpera -i big_file.tgz.rarN.dei    ## here the N is any part of the sequence.
+_Exemple 1:_\n
+./DividaEtImpera -db 1000000 small_image.png  ## separate the file in different file of each 1Mbytes long.\n
+./DividaEtImpera -i small_image.pngN.dei      ## here the N is any part of the sequence.\n
+\n
+_Exemple 2:_\n
+./DividaEtImpera -dp 5 big_file.tgz.rar      ## separate the file in 5 files.\n
+./DividaEtImpera -i big_file.tgz.rarN.dei    ## here the N is any part of the sequence.\n
 
 # INFO
-The name of the file should not be greater than 26 (or 27/28 if there is many parts).
+The name of the file should not be greater than 26 (or 27/28 if there is many parts).\n
 Max parts possible is 254.
