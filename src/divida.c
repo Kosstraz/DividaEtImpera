@@ -6,7 +6,7 @@
 /*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 04:05:30 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 04:47:32 by bama             ###   ########.fr       */
+/*   Updated: 2025/01/24 13:07:29 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,9 @@ static void	set_name(unsigned char name[32], char* filename)
 		name[i++] = '\0';
 }
 
-/*static char*	dei_strjoin(char* str1, char* str2)
+static void	create_files(char* data, const t_dei* dei, t_dei_header* header)
 {
-	int	i = 0;
-	int	size1 = strlen(str1);
-	int	size2 = strlen(str2);
-	char*	new_str = malloc((size1 + size2 + 1) * sizeof(char));
-	if (new_str == NULL)
-		return (NULL);
-	while (*str1)
-		new_str[i++] = *(str1)++;
-	while (*str2)
-		new_str[i++] = *(str2)++;
-	new_str[i] = '\0';
-	return (new_str);
-}*/
-
-static void	create_files(t_dei_header* header)
-{
+	unsigned int	bytes_writted = 0;
 	unsigned char	i = 0;
 	char*			div_name = NULL;
 
@@ -71,11 +56,16 @@ static void	create_files(t_dei_header* header)
 		if (div_name == NULL)
 			exit(1);
 		sprintf(div_name, "%s%d%s", header->name, i, ".dei");
-		int	fd = open(div_name, O_WRONLY | O_CREAT, 0666);
+		int	fd = open(div_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 
-		header->file_size = sizeof(t_dei_header);
 		header->parts = i;
+		if (i == dei->parts_calculated - 1)
+			header->file_size = (((dei->parts_calculated - 1) * dei->bytes) - dei->total_file_size) - sizeof(t_dei_header);
+		else
+			header->file_size = (dei->bytes) - sizeof(t_dei_header);
 		write(fd, header, sizeof(t_dei_header));
+		write(fd, &data[bytes_writted], header->file_size);
+		bytes_writted += header->file_size;
 
 		free(div_name);
 		close(fd);
@@ -85,29 +75,58 @@ static void	create_files(t_dei_header* header)
 
 void	divida(int ac, char** av, const t_dei_options* options)
 {
-	(void)options;
 	(void)ac;
 	t_dei_header	header;
-	t_dei			dee;
+	t_dei			dei;
 	char*			data;
 	int				file_size;
 	int				fd;
 
-	dee.file = av[0];
-	dee.parts_calculated = 3;	// <--
-	fd = open(av[0], O_RDONLY);
-	if (fd == -1)
+	if (ac < 1)
+	{
+		printf("ac < 1\n");
 		return ;
+	}
+
+	dei.file = av[1];
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+	{
+		printf("fd %s\n", av[1]);
+		return ;
+	}
 	file_size = __file_size(fd);
 	data = mmap(NULL, file_size, PROT_READ, MAP_SHARED, fd, 0);
 	if (data <= (char*)0)
+	{
+		printf("mmap\n");
 		return ;
+	}
 
+	dei.total_file_size = file_size;
+	if (options->parts)
+		dei.parts_calculated = atoi(av[0]);	// <--
+	else
+	{
+		dei.bytes = atoi(av[0]);
+		if (dei.bytes <= sizeof(t_dei_header))
+		{
+			printf("bytes must be greater than %ld bytes\n", sizeof(t_dei_header));
+			munmap(data, file_size);
+			close(fd);
+			return ;
+		}
+		dei.parts_calculated = file_size / (dei.bytes - sizeof(t_dei_header));
+		if ((float)((float)dei.parts_calculated - (int)dei.parts_calculated) < 0.0f)
+			++dei.parts_calculated;
+	}
+
+	printf("feur1\n");
 	header.size = sizeof(t_dei_header);
-	header.total_parts = dee.parts_calculated; //auto - deduction with -in-bytes || -in-parts
-	set_name(header.name, av[0]);
+	header.total_parts = dei.parts_calculated; //auto - deduction with -in-bytes || -in-parts
+	set_name(header.name, av[1]);
 	header.hash_id = hash_id(header.name);
-	create_files(&header);
+	create_files(data, &dei, &header);
 
 	munmap(data, file_size);
 	close(fd);

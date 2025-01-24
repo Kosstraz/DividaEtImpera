@@ -6,7 +6,7 @@
 /*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 02:41:06 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 04:43:19 by bama             ###   ########.fr       */
+/*   Updated: 2025/01/24 12:53:33 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef struct	s_dei
 {
 	char*			file;
 	unsigned int	bytes;
-	unsigned int	parts_calculated;
+	unsigned long	total_file_size;
+	float			parts_calculated;
 }	t_dei;
 
 typedef struct	s_dei_header

@@ -6,7 +6,7 @@
 /*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 02:43:08 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 04:33:57 by bama             ###   ########.fr       */
+/*   Updated: 2025/01/24 12:59:22 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(int ac, const char** av)
 	else if (ac - option_count <= 0)
 		return (1);
 	if (options.divida)
-		divida(ac - option_count, (char**)(av + option_count), &options);
+		divida(ac - option_count + 1, (char**)(av + option_count - 1), &options);
 	else if (options.impera)
-		impera(ac - option_count, (char**)(av + option_count), &options);
+		impera(ac - option_count + 1, (char**)(av + option_count - 1), &options);
 	return (0);
 }
