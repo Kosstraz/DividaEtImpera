@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opt_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 02:57:20 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 04:04:28 by bama             ###   ########.fr       */
+/*   Updated: 2025/01/24 16:18:51 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	options_handling(int ac, const char** av, char** ioptions, char* foptions, v
 			}
 			else
 			{
+				int	__flag = 0;
 				int	j = 1;
 				while (av[i][j])
 				{
@@ -87,15 +88,17 @@ int	options_handling(int ac, const char** av, char** ioptions, char* foptions, v
 					else if (val != OPTH_ALL_FOUND)
 					{
 						*((char*)(buffer + val)) = 1;
-						++opt_count;
+						++__flag;
 					}
 					else
 					{
-						++opt_count;
+						++__flag;
 						memset(buffer, 1, bufsize);
 						all_is_found = 1;
 					}
 				}
+				if (__flag > 0)
+					++opt_count;
 			}
 		}
 		++i;

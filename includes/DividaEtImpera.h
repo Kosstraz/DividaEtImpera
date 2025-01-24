@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   DividaEtImpera.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 02:41:06 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 12:53:33 by bama             ###   ########.fr       */
+/*   Updated: 2025/01/24 18:43:39 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ typedef struct	s_dei_options
 	char	parts;
 }	t_dei_options;
 
+typedef struct	s_dei_ff_info
+{
+	char*			buffer;
+	unsigned char	index;
+	unsigned long	size;
+}	t_dei_ff_info;
+
+typedef struct	s_dei_impera
+{
+	unsigned long	hash_id;
+	unsigned char	total_parts;
+	unsigned char*	name_format;
+	char**			file_names;
+	int				fd;
+	int				subfd;
+	t_dei_ff_info	ff; // if the file passed in arg is not the first part, it will be stocked in this buffer
+}	t_dei_impera;
+
 typedef struct	s_dei
 {
 	char*			file;
@@ -55,8 +73,9 @@ typedef struct	s_dei_header
 	unsigned char	name[32];	// Nom original du fichier (avec extension)
 	unsigned long	hash_id;	// ID de hashage
 	unsigned long	file_size;	// Taille du fichier
+	unsigned long	total_file_size;	// Taille du fichier apres reunion
 	unsigned long	size;		// Taille du header
-	unsigned long	parts;		// Numéro de la partie (0/total_parts)
+	unsigned long	index;		// Index de la partie (0/total_parts)
 	unsigned char	total_parts;// Nombre de parties au total
 }	t_dei_header;
 
