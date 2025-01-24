@@ -1,13 +1,13 @@
 # OPTIONS
---divida : Divide a file passed as parameter (not compatible with other options).<br/>
---impera : Reunite the sequence corresponding to the file param passed (only one file, is useless to pass all file sequence) (not compatible with divida).<br/>
---in-bytes X : Divide the file passed as parameter in several parts, each X bytes long (no compatible with --impera and --in-part).<br/>
---in-parts N : Divie the file passed as parameter in N parts (not compatible with --impera and --in-parts).<br/>
+**--divida** : Divide a file passed as parameter (not compatible with other options).<br/>
+**--impera** : Reunite the sequence corresponding to the file param passed (only one file, is useless to pass all file sequence) (not compatible with divida).<br/>
+**--in-bytes X** : Divide the file passed as parameter in several parts, each X bytes long (no compatible with --impera and --in-part).<br/>
+**--in-parts N** : Divie the file passed as parameter in N parts (not compatible with --impera and --in-parts).<br/>
 <br/>
--d corresponding to --divida<br/>
--i corresponding to --impera<br/>
--b corresponding to --in-bytes<br/>
--p corresponding to --in-parts<br/>
+**-d** corresponding to --divida<br/>
+**-i** corresponding to --impera<br/>
+**-b** corresponding to --in-bytes<br/>
+**-p** corresponding to --in-parts<br/>
 
 # USAGE
 _Exemple 1:_ <br/>
