@@ -6,12 +6,13 @@
 /*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 04:05:30 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 18:48:23 by ymanchon         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:45:52 by ymanchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DividaEtImpera.h"
 #include <string.h>
+#include <math.h>
 
 static int	__file_size(int fd)
 {
@@ -113,7 +114,18 @@ void	divida(int ac, char** av, const t_dei_options* options)
 
 	dei.total_file_size = file_size;
 	if (options->parts)
-		dei.parts_calculated = atoi(av[0]);	// <--
+	{
+		dei.parts_calculated = atoi(av[0]);
+		if (dei.parts_calculated <= 1 || dei.parts_calculated >= 255)
+		{
+			printf("Too much (or inferior/equal to 1) parts calculated, please increase bytes specified\n");
+			munmap(data, file_size);
+			close(fd);
+			return ;
+		}
+		dei.bytes = (int)roundf((float)((float)dei.total_file_size / (float)dei.parts_calculated));
+		printf("bytes disp %d\n", dei.bytes);
+	}
 	else
 	{
 		dei.bytes = atoi(av[0]);
