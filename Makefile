@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+         #
+#    By: bama <bama@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 16:21:19 by ymanchon          #+#    #+#              #
-#    Updated: 2025/01/24 19:45:36 by ymanchon         ###   ########.fr        #
+#    Updated: 2025/01/24 22:04:06 by bama             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ YELLOW 	= \e[38;2;250;189;0m
 #*   VARIABLES   *#
 # ############### #
 
-NAME = DividaEtImpera
+NAME = dei
 
 CC = @cc
 
@@ -48,7 +48,7 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.obj)
 
 DEPS = $(OBJS:%.obj=%.d)
 
-CFLAGS = -Wall -Wextra -Wno-unused-result -MMD -g3
+CFLAGS = -Wall -Wextra -Wno-unused-result -MMD -fPIE
 
 INCLUDES = -I. -I./includes/
 

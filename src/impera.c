@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   impera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 04:05:30 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 18:44:26 by ymanchon         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:08:34 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	mmap_file(char* file, t_dei_impera* impera, int first)
 		write(2, "mmap failed\n", strlen("mmap failed\n"));
 		exit(1);
 	}
+	printf("extracting\t%s (%ld bytes)\n", file, header->file_size + sizeof(t_dei_header));
 	char*	data = mmap(NULL, header->file_size + sizeof(t_dei_header), PROT_READ, MAP_SHARED, impera->subfd, 0);
 	char*	data_tmp = data;
 	data += sizeof(t_dei_header);
@@ -96,7 +97,6 @@ void	impera(int ac, char** av, const t_dei_options* options)
 		{
 			fname = malloc(32 * sizeof(char));
 			fname[sprintf(fname, "%s%d%s", impera.name_format, i, ".dei")] = '\0';
-			printf("extract\t%s\n", fname);
 			mmap_file(fname, &impera, 0);
 			free(fname);
 		}

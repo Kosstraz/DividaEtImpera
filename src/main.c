@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 02:43:08 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 19:46:44 by ymanchon         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:52:26 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	main(int ac, const char** av)
 	//printf("options count %d\n", option_count);
 	if (option_count < 0)
 		error_msg("Nombre d'options insuffisant\n");
-	else if ((options.bytes && options.parts) || (!options.bytes && !options.parts && !options.impera))
+	else if ((options.bytes && options.parts))
 		error_msg("Impossible de diviser par partie et par octets a la fois\n");
+	else if (!options.bytes && !options.parts && !options.impera)
+		error_msg("Impossible de diviser sans l'option -p (--in-parts) ou -b (--in-bytes)\n");
 	else if (options.divida && options.impera)
 		error_msg("Impossible de diviser et de reunir en meme temps\n");
 	else if (options.impera && (options.bytes || options.parts))

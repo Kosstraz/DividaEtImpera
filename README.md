@@ -11,12 +11,12 @@
 
 # USAGE
 _Exemple 1:_ <br/>
-./DividaEtImpera -db 1000000 small_image.png  ## separate the file in different file of each 1Mbytes long.<br/>
-./DividaEtImpera -i small_image.pngN.dei      ## here the N is any part of the sequence.<br/>
+./dei -db 1000000 small_image.png  ## separate the file in different file of each 1Mbytes long.<br/>
+./dei -i small_image.pngN.dei      ## here the N is any part of the sequence.<br/>
 <br/>
 _Exemple 2:_ <br/>
-./DividaEtImpera -dp 5 big_file.tgz.rar      ## separate the file in 5 files.<br/>
-./DividaEtImpera -i big_file.tgz.rarN.dei    ## here the N is any part of the sequence.<br/>
+./dei -dp 5 big_file.tgz.rar      ## separate the file in 5 files.<br/>
+./dei -i big_file.tgz.rarN.dei    ## here the N is any part of the sequence.<br/>
 
 # INFO
 The name of the file should not be greater than 26 (or 27/28 if there is many parts).<br/>

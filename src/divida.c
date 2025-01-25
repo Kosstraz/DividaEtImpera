@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   divida.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymanchon <ymanchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bama <bama@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 04:05:30 by bama              #+#    #+#             */
-/*   Updated: 2025/01/24 19:45:52 by ymanchon         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:12:51 by bama             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	create_files(char* data, const t_dei* dei, t_dei_header* header, con
 		sprintf(div_name, "%s%d%s", header->name, i, ".dei");
 		int	fd = open(div_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 
-		printf("Creating\t%s\n", div_name);
 		header->index = i;
 		if (i == (int)dei->parts_calculated - 1)
 			header->file_size = (dei->total_file_size - ((dei->parts_calculated - 1) * (dei->bytes - sizeof(t_dei_header))));
@@ -72,6 +71,7 @@ static void	create_files(char* data, const t_dei* dei, t_dei_header* header, con
 			else
 				header->file_size = sizeof(t_dei_header) - header->file_size;
 		}
+		printf("Creating\t%s (%ld bytes)\n", div_name, header->file_size + sizeof(t_dei_header));
 
 		write(fd, header, sizeof(t_dei_header));
 		write(fd, &data[bytes_writted], header->file_size);
@@ -124,7 +124,6 @@ void	divida(int ac, char** av, const t_dei_options* options)
 			return ;
 		}
 		dei.bytes = (int)roundf((float)((float)dei.total_file_size / (float)dei.parts_calculated));
-		printf("bytes disp %d\n", dei.bytes);
 	}
 	else
 	{
@@ -150,7 +149,7 @@ void	divida(int ac, char** av, const t_dei_options* options)
 	header.size = sizeof(t_dei_header);
 	header.total_parts = dei.parts_calculated; //auto - deduction with -in-bytes || -in-parts
 	header.total_file_size = dei.total_file_size;
-	printf("parts calculated %hhu\n", header.total_parts);
+	printf("Number of parts to be created: %hhu (total: %ld bytes)\n", header.total_parts, header.total_file_size);
 	set_name(header.name, av[1]);
 	header.hash_id = hash_id(header.name);
 	create_files(data, &dei, &header, options);
